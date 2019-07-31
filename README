@@ -1,12 +1,8 @@
 
 Note: to run this project on Windows or Linux/Mac with the embedded DB H2 (easiest way):
-0. If running on topcat, edit src/main/resources/application.properties and
-  set the port to one of your assigned ports, preferably xxxx3 to follow
-  our conventions (for example, 51303). See CS636Ports.html for your ports.
-
-1. Drop and load the music database (the tables have changed a little)
+1. Drop and load the music database
    cd to the database directory here.
-   and use the db tools there, same as in pizza1 and music1 and pizza3
+   and use the db tools there.
    
 2. Use "mvn clean package" when cd'd to this directory to build/rebuild the jar
 
