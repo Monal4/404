@@ -1,5 +1,5 @@
 
-Note: to run this project on Windows or Linux/Mac with the embedded DB H2 (easiest way):
+Note: to run this project on Windows or Linux/Mac with DB H2, MySQL and SQL*Plus:
 1. Drop and load the music database
    cd to the database directory here.
    and use the db tools there.
@@ -14,8 +14,7 @@ Note: to run this project on Windows or Linux/Mac with the embedded DB H2 (easie
 or  runJarByProfile.sh h2 web (Linux or Mac)
 or using mvn directly (see contents of runMvnByProfile). Either way, let it hang.
 
-5. Browse to localhost:9003/welcome.html to see the top-level page. Replace 9003 here
-with your own port ending in 3 if running on topcat.
+5. Browse to localhost:9003/welcome.html to see the top-level page.
 
 6. Run all the JUnit tests with mvn test. They are also run during mvn package.
 
@@ -24,12 +23,15 @@ with your own port ending in 3 if running on topcat.
 or  runJarByProfile.sh h2 SystemTest  (Linux or Mac)
 or  runMvnByProfile h2 SystemTest, etc.
 
-To use a real DB: you need to define environment variables (same as for music1)
+To use a real DB: you need to define environment variables
  For Oracle database, set up env variables ORACLE_USER, ORACLE_PW, ORACLE_SITE
  For MySQL use, set up env vars MYSQL_USER, MYSQL_PW, MYSQL_SITE
 Then these are accessed from the profiles to setup the JDBC config.
 So you can run simply  runJarByProfile oracle web   for example, and
 let it hang.  Use a browser to run the webapp as in step 5.
+
+To see Java files browse into src/main/java/.. 
+For all JSP's browse to src/main/webapp/...
 
 Inside eclipse:
 For development and debugging, run SBApplication as a Java app inside eclipse,
