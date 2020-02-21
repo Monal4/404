@@ -1,7 +1,6 @@
 package cs636.music.dao;
 
 /**
- * @author Chung-Hsien (Jacky) Yu
  * 
  *         Database schema related constants.
  */

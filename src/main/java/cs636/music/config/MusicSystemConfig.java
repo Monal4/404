@@ -5,7 +5,6 @@ import java.io.StringWriter;
 
 import cs636.music.service.*;
 /**
- * @author Betty O'Neil
  *
  *         No need to configure the service objects: Spring does that for us
  *         Just a few utilities left.
