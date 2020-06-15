@@ -50,7 +50,7 @@ public class CatalogController{
 	@RequestMapping("/download")
 	public String showProduct(Model model,@RequestParam(value = "productCode", required=false)
 	String productCode, @RequestParam(value = "Quantity", required=false)
-	Integer Quantity,HttpServletRequest request) throws ServletException
+	Integer Quantity, HttpServletRequest request) throws ServletException
 	{
 		String url = null;
 		if (productCode.equals("pf01")) {
@@ -120,19 +120,19 @@ public class CatalogController{
 		model.addAttribute("productId", productId);
 		model.addAttribute("productCode", productCode);
 		model.addAttribute("productQuantity", productQuantity);
-	//	Set<CartItemData> setofcartdata = new HashSet<CartItemData>();
+		Set<CartItemData> setofcartdata = new HashSet<CartItemData>();
 		
 		try {
-			//model.addAttribute("productQuantity", productQuantity);
+			CartBean cartbean = (CartBean) request.getSession().getAttribute("cart");
+			if (checkCartBean(request,cartbean) == false) {
+				cartbean = new CartBean();
+			}
 			
-			cart = (Cart) request.getSession().getAttribute("cart");
-			if (checkCart(request) == false) {
-				cart = catalogService.createCart();
+			if(checkCart(request,cart) == false) {
+				cart = new Cart();
 			}
-			catalogService.addItemtoCart(productId, cart, productQuantity);
-			if(checkCart(request) == false) {
-			request.getSession().setAttribute("cart", cart);
-			}
+			setofcartdata = catalogService.getCartInfo(cart);
+			
 		}catch(Exception e) {
 			throw new ServletException(e);
 		}	
@@ -169,10 +169,10 @@ public class CatalogController{
 		return "cart";
 	}
 	
-	private boolean checkCart(HttpServletRequest request) throws IOException {
-		 HttpSession session = request.getSession();
-			Cart cart = (Cart) session.getAttribute("cart");
-			return (cart != null);
+	private boolean checkCartBean(HttpServletRequest request, CartBean cartbean) throws IOException {
+		 	HttpSession session = request.getSession();
+			cartbean = (CartBean) session.getAttribute("cart");
+			return (cartbean != null);
 		}
 }
 

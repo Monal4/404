@@ -104,8 +104,16 @@ public class CatalogService {
 			item = new CartItem(productId, quantity);
 			// cart.addItem(item);
 			cart.getItems().add(item);
-			System.out.println("The product Quantity is:=");
+			System.out.println("The product Quantity is:= " + quantity);
 		}
+	}
+	
+	public CartBean getCartBean( ) {
+		
+		System.out.println("Cart Bean Method");
+		
+		
+		
 	}
 
 	/**

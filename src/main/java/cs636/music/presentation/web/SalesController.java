@@ -47,7 +47,6 @@ public class SalesController {
 			user.setEmail(email);
 		}
 		request.getSession().setAttribute("user", user);
-		
 
 			System.out.print("The inserted values are:-"+ email + firstname + lastname );
 			try {
