@@ -9,7 +9,7 @@
 	<h1>You are now logged out</h1>
 	<p>(i.e., your session is terminated)</p>
 	<br>
-	<a href="welcome.html">Home</a>
+	<a href="../">Home</a>
 
 </section>
 

@@ -27,6 +27,6 @@
 	<br>
 	<ul>
 	<li><a href="ShowReport.html">Back</a></li>
-	<li><a href="thanksadmin.html" >Back to Admin page</a></li>
+	<li><a href="AdminPage.html" >Back to Admin page</a></li>
     </ul>
 </section>

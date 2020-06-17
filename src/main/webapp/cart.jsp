@@ -19,7 +19,7 @@
   			</tr>
   		</table>
 
-<c:if test = "{!empty allProducts}">
+<!-- <c:if test = "{!empty allProducts}"> -->
 <c:forEach items="${allProducts}" var="ap">
           <table border=1>
       <tr>
@@ -32,7 +32,7 @@
         </tr>
       </table>  
       </c:forEach>
-</c:if>
+<!-- </c:if> -->
 
 	<br>
 <a href="catalog.html"> continue shopping!</a>

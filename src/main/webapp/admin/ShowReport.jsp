@@ -9,6 +9,6 @@
 	<ul>
 	<li><a href="forinvoiceprocess.html">List Of Invoices</a></li>
 	<li><a href="ListOfDownloads.html">List Of Downloads</a></li>
-	<li><a href="thanksadmin.html">Back to admin page</a></li>
+	<li><a href="AdminPage.html">Back to admin page</a></li>
     </ul>
 </section>

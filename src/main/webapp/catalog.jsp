@@ -26,7 +26,7 @@
 </a>
 </p>
 <li>
-	<a href="cart.html">view Cart</a>
+	<a href="/cart.html">view Cart</a>
 </li>
 
 </section>

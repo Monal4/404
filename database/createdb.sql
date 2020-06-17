@@ -111,9 +111,8 @@ CREATE TABLE userpass (
   password varchar(15) NOT NULL
 );
   
-INSERT INTO userpass VALUES ('andrea', 'sesame');
-INSERT INTO userpass VALUES ('joel', 'sesame');
-INSERT INTO userpass VALUES ('anne', 'sesame');
+INSERT INTO userpass VALUES ('monal', 'rupapara');
+INSERT INTO userpass VALUES ('chintan', 'rank');
                           
 CREATE TABLE userrole (   
   username VARCHAR(15) NOT NULL,
@@ -121,9 +120,8 @@ CREATE TABLE userrole (
   PRIMARY KEY (username, rolename)
 );
   
-INSERT INTO userrole VALUES ('andrea', 'service');
-INSERT INTO userrole VALUES ('andrea', 'programmer');
-INSERT INTO userrole VALUES ('joel', 'programmer');
+INSERT INTO userrole VALUES ('Monal', 'programmer');
+INSERT INTO userrole VALUES ('Chintan', 'programmer');
 
 --added table for generating ids (for both DBs)--
 create table music_sys_tab (

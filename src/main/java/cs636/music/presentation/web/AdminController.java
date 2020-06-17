@@ -27,6 +27,7 @@ public class AdminController {
 
 	public static final String Admin_url = "/adminController/";
 	public static final String Admin_jsp_dir = "/admin/";
+	//private static final int debug = 0;
 	
 	@Autowired
 	private SalesService salesService;
@@ -36,13 +37,16 @@ public class AdminController {
 	@Value("${spring.datasource.url}")
 	private String dbUrl;
 	
-	@RequestMapping(Admin_url+"adminWelcome.html")
-	public String welcomeadmin() {
-		String url = Admin_jsp_dir + "adminWelcome";
+	@RequestMapping(Admin_url+"adminPortalLogin.html")
+	public String welcomeadmin(HttpServletRequest request) throws ServletException {
+		String url = Admin_jsp_dir + "adminPortalLogin";
+		if(request.getSession().getAttribute("admin") != null) {
+			return Admin_jsp_dir + "AdminPage";
+		}
 		return url;
 	}
 
-	@RequestMapping(Admin_url+"loginAdmin.html")
+	@RequestMapping(Admin_url+"AdminCredentials")
 	public String displayWelcome(Model model,@RequestParam(value = "firstName", required = false) String firstname,
 			@RequestParam(value="password"
 			, required=false) String password,HttpServletRequest request) throws ServletException{
@@ -58,32 +62,37 @@ public class AdminController {
 			if(admin.getfirstname()!=null)
 				request.getSession().setAttribute("admin",admin);
 				try {			
-						System.out.println("Entering the condition:");			
-						if(salesService.checkAdminLogin(firstname, password)) {
-								
+					System.out.println("Entering the condition:");			
+					
+					if(salesService.checkAdminLogin(firstname, password)) {
 						System.out.println("Successfully entered:");
 						System.out.println("Successful Login:-");
 						model.addAttribute("firstName", firstname);
-						return Admin_jsp_dir + "thanksadmin";	
-					
-						}
-							else {
-								System.out.print("Wrong Admin Details:");
-								return Admin_jsp_dir + "adminWelcome";
-							}
-						}catch(Exception e)
-						{
-							throw new ServletException("Problem with direction");	
-						}
-	}
+						return Admin_jsp_dir + "AdminPage";	
+					}
+					else {
+						System.out.print("Wrong Admin Details:");
+						return Admin_jsp_dir + "adminPortalLogin";
+					}
+				}catch(Exception e)
+					{
+						throw new ServletException("Problem with direction");	
+					}
+			}
 	
 	@RequestMapping(Admin_url+"ShowReport.html")
-	public String DisplayReport(Model model) {
+	public String DisplayReport(Model model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("admin") == null) {
+			return Admin_jsp_dir + "AdminPage";
+		}
 		return Admin_jsp_dir+"ShowReport";
 	}
 	
 	@RequestMapping(Admin_url+"listVariables.html")
-	public String listVariables(Model model) {	
+	public String listVariables(Model model, HttpServletRequest request) {	
+		if(request.getSession().getAttribute("admin") == null) {
+			return Admin_jsp_dir + "adminPortalLogin";
+		}
 		model.addAttribute("dbUrl", dbUrl);
 		System.out.println("dbUrl from application.properties: " + dbUrl);
 		String url = Admin_jsp_dir+"listVariables";
@@ -91,7 +100,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping(Admin_url + "initializeDB.html")
-	public String adminInitDB(Model model) {
+	public String adminInitDB(Model model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("admin") == null) {
+			return Admin_jsp_dir + "adminPortalLogin";
+		}
 		String info;
 		try {
 			salesService.initializeDB();
@@ -107,21 +119,31 @@ public class AdminController {
 		return url;
 	}
 	
-	@RequestMapping(Admin_url+"logout.html")
+	@RequestMapping("logout.html")
 	public String logout(Model model, HttpServletRequest request) {	
+//		if(request.getSession().getAttribute("admin") == null) {
+//			return Admin_jsp_dir + "AdminPage";
+//		}
 		request.getSession().invalidate();  // drop session
-		String url = Admin_jsp_dir+"logout";
-		return url;
+//		String url = Admin_jsp_dir+"logout";
+			return "/logout";
 	}
 	
-	@RequestMapping(Admin_url+"thanksadmin.html")
-	public String thanks() {	
-		String url = Admin_jsp_dir+"thanksadmin";
-		return url;
-	}
+	@RequestMapping(Admin_url+"AdminPage.html")
+	public String PageTesting(HttpServletRequest request) {	
+		if(request.getSession().getAttribute("admin") == null) {
+			return Admin_jsp_dir + "adminPortalLogin";
+		}
+		String url = Admin_jsp_dir+"AdminPage";
+			return url;
+		}
 	
 	@RequestMapping(Admin_url+"ListOfDownloads.html")
-	public String showAllDownloads(Model model, @RequestParam(value = "command", required = false) String command){
+	public String showAllDownloads(Model model, @RequestParam(value = "command", required = false) String command
+			, HttpServletRequest request){
+		if(request.getSession().getAttribute("admin") == null) {
+			return Admin_jsp_dir + "adminPortalLogin";
+		}
 		Set<DownloadData> allDownload=null;
 		String url = null;
 		try {
@@ -144,6 +166,9 @@ public class AdminController {
 	
 	@RequestMapping(Admin_url+"process")
 	public String Process(Model model,@RequestParam(value="id" , required = false) String id ,HttpServletRequest request) {
+		if(request.getSession().getAttribute("admin") == null) {
+			return Admin_jsp_dir + "adminPortalLogin";
+		}
 		String url=null;
 		System.out.println("Processing invoice with id :"+ id);
 		long id1=Long.parseLong(id);
@@ -165,6 +190,9 @@ public class AdminController {
 	
 	@RequestMapping(Admin_url+"processInvoice")
 	public String ProcessInvoice(Model model, @RequestParam(value = "command", required = false) String command,HttpServletRequest request) {
+		if(request.getSession().getAttribute("admin") == null) {
+			return Admin_jsp_dir + "adminPortalLogin";
+		}
 		Set<InvoiceData> invoices = null;
 		String ForwardUrl = null;
 		
@@ -191,7 +219,10 @@ public class AdminController {
 
 	
 	@RequestMapping(Admin_url+"forinvoiceprocess.html")
-	public String ToProcessInvoice(Model model, @RequestParam(value = "command", required = false) String command){
+	public String ToProcessInvoice(Model model, @RequestParam(value = "command", required = false) String command, HttpServletRequest request){
+		if(request.getSession().getAttribute("admin") == null) {
+			return Admin_jsp_dir + "adminPortalLogin";
+		}
 		Set<InvoiceData> invoices = null;
 		String url = null;
 		try {

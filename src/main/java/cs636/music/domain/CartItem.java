@@ -10,7 +10,7 @@ package cs636.music.domain;
  */
 public class CartItem {
 
-	private long productId;
+	private volatile long productId;
 	private int quantity;
 	
 	// no-args constructor, to be proper JavaBean

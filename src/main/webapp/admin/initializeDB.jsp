@@ -6,7 +6,7 @@
 	<br>
 	${info}
 	
-	<br> <a href="thanksadmin.html">Back to Admin Page</a>
+	<br> <a href="AdminPage.html">Back to Admin Page</a>
 	
 </section>
 

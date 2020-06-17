@@ -34,11 +34,8 @@ public class CatalogController{
 
 	@Autowired
 	private CatalogService catalogService;
-//	@Autowired 
-//	private SalesService salesService;
-	
-	// String constants for URLs
-	private static final String WELCOME_URL = "/welcome.html";
+
+	private static final String WELCOME_URL = "";
 	private static final String WELCOME_VIEW = "/welcome";
 	
 
@@ -49,8 +46,7 @@ public class CatalogController{
 
 	@RequestMapping("/download")
 	public String showProduct(Model model,@RequestParam(value = "productCode", required=false)
-	String productCode, @RequestParam(value = "Quantity", required=false)
-	Integer Quantity, HttpServletRequest request) throws ServletException
+	String productCode, HttpServletRequest request) throws ServletException
 	{
 		String url = null;
 		if (productCode.equals("pf01")) {
@@ -94,8 +90,6 @@ public class CatalogController{
 			url = "/sound/universal"; 
 		} 
 		model.addAttribute("productCode", productCode);
-	//	model.addAttribute("", attributeValue)
-		//model.addAttribute("NoofProducts", MusicSystemConfig.Max_Quantity);
 		
 		return url;
 	}
@@ -105,7 +99,6 @@ public class CatalogController{
 	String productCode, @RequestParam(value="productQuantity",required = false) Integer productQuantity
 			,HttpServletRequest request) throws ServletException {
 		
-		//CartItemData cart = new CartItemData();
 		Cart cart = null;
 		Product product = new Product();
 		try {
@@ -118,26 +111,20 @@ public class CatalogController{
 		System.out.println("The product Id is:=" + productId);
 		System.out.println("The product Quantity is:=" + productQuantity);
 		model.addAttribute("productId", productId);
-		model.addAttribute("productCode", productCode);
 		model.addAttribute("productQuantity", productQuantity);
-		Set<CartItemData> setofcartdata = new HashSet<CartItemData>();
 		
 		try {
-			CartBean cartbean = (CartBean) request.getSession().getAttribute("cart");
-			if (checkCartBean(request,cartbean) == false) {
-				cartbean = new CartBean();
+			cart = (Cart) request.getSession().getAttribute("cart");
+			if (checkCart(request) == false) {
+				cart = catalogService.createCart();
 			}
-			
-			if(checkCart(request,cart) == false) {
-				cart = new Cart();
+			catalogService.addItemtoCart(productId, cart, productQuantity);
+			if(checkCart(request) == false) {
+			request.getSession().setAttribute("cart", cart);
 			}
-			setofcartdata = catalogService.getCartInfo(cart);
-			
 		}catch(Exception e) {
 			throw new ServletException(e);
 		}	
-		
-	//	model.addAttribute("allProducts", setofcartdata);
 		
 		return "cart";
 	}
@@ -149,30 +136,35 @@ public class CatalogController{
 		ArrayList<Long> id = new ArrayList<>();
 		ArrayList<Integer> quantity = new ArrayList<>();
 		
+//		if(request.getSession().getAttribute("cart") == null) {
+//			Cart cart = new Cart();
+//		}
+		
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
 		try {
+			if(cart == null) {
+				cart = catalogService.createCart();
+			}
 			setofcartdata = catalogService.getCartInfo(cart);
 			for(CartItemData a : setofcartdata) {
 				 id.add(a.getProductId());
 				quantity.add(a.getQuantity());
 			}
 			
+			request.getSession().setAttribute("cart", cart);
 			model.addAttribute("productId", id);
 			model.addAttribute("productQuantity", quantity);
 		}catch(Exception e) {
 			throw new ServletException(e);
 		}	
-		//model.addAttribute("allProducts", setofcartdata);
-		
-	//	model.addAttribute("productId")
 		
 		return "cart";
 	}
 	
-	private boolean checkCartBean(HttpServletRequest request, CartBean cartbean) throws IOException {
-		 	HttpSession session = request.getSession();
-			cartbean = (CartBean) session.getAttribute("cart");
-			return (cartbean != null);
+	private boolean checkCart(HttpServletRequest request) throws IOException {
+		 HttpSession session = request.getSession();
+			Cart cart = (Cart) session.getAttribute("cart");
+			return (cart != null);
 		}
 }
 

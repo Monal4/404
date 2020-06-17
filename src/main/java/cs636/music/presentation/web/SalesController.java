@@ -26,7 +26,10 @@ public class SalesController {
 	private static final String USER_WELCOME_URL = "/userWelcome.html";
 	
 	@RequestMapping(USER_WELCOME_URL)
-	public String welcomeuser() {
+	public String welcomeuser(HttpServletRequest request) throws ServletException{
+		if(request.getSession().getAttribute("user") != null) {
+			return "catalog";
+		}
 		return "userWelcome";
 	}
 
@@ -35,19 +38,21 @@ public class SalesController {
 			@RequestParam(value="firstName" , required=false) String firstname, @RequestParam(value = 
 			"lastName", required = false) String lastname,
 			 @RequestParam(value ="address", required = false) String address,HttpServletRequest request) throws ServletException{
-			
 		
 		System.out.println("Starting User registration:");
 		
 		//String forwardURL;
 		
+		if(request.getSession().getAttribute("user") != null) {
+			return "catalog";
+		}
 		UserBean user = (UserBean) request.getSession().getAttribute("user");
 		if(user == null) {
 			user = new UserBean();
 			user.setEmail(email);
 		}
 		request.getSession().setAttribute("user", user);
-
+	
 			System.out.print("The inserted values are:-"+ email + firstname + lastname );
 			try {
 				salesService.registerUser(firstname, lastname, email);
@@ -65,7 +70,7 @@ public class SalesController {
 				return "address";
 			}
 			}catch(Exception e) {
-				throw new ServletException("address update peblem"+e);
+				throw new ServletException("address update problem"+e);
 			}
 			
 			return "catalog";
@@ -73,7 +78,7 @@ public class SalesController {
 	
 	@RequestMapping("addAddress.html")
 	public String addAddress(Model model,@RequestParam(value = "email" , required = false) 
-	String email,@RequestParam(value ="address" , required = false) String address,HttpServletRequest request) throws ServletException {
+	String email,@RequestParam(value ="address" , required = false) String address, HttpServletRequest request) throws ServletException {
 		
 		UserData user = new UserData();
 		

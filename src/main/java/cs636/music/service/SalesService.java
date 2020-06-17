@@ -95,6 +95,25 @@ public class SalesService {
 			throw new ServiceException("Error while registering user: ", e);
 		}
 	}
+	
+//	public boolean checkUserAddress(long userId) throws ServiceException {
+//		
+//		User user = null;
+//		Connection connection = null;
+//		
+//		try {
+//			connection = salesDbDAO.startTransaction();
+//			user = userDb.findUserByID(connection, userId);
+//			
+//			if (user == null) { // this user has not registered yet
+//				throw new ServiceException("No user with this ID " + userId);
+//			}
+//			if(user.get)
+//		}catch(Exception e) {
+//			salesDbDAO.rollbackAfterException(connection);
+//			throw new ServiceException("Error while checking user: ", e);
+//		}
+//	}
 
 	/**
 	 * Get user info by given id

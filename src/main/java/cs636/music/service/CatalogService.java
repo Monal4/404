@@ -66,6 +66,7 @@ public class CatalogService {
 	 * 
 	 * @return the cart's content
 	 */
+	
 	public Set<CartItemData> getCartInfo(Cart cart) throws ServiceException {
 		Set<CartItemData> items = new HashSet<CartItemData>();
 		Connection connection = null;
@@ -104,16 +105,8 @@ public class CatalogService {
 			item = new CartItem(productId, quantity);
 			// cart.addItem(item);
 			cart.getItems().add(item);
-			System.out.println("The product Quantity is:= " + quantity);
+			System.out.println("The product Quantity is:=");
 		}
-	}
-	
-	public CartBean getCartBean( ) {
-		
-		System.out.println("Cart Bean Method");
-		
-		
-		
 	}
 
 	/**
