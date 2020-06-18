@@ -27,7 +27,6 @@ public class AdminController {
 
 	public static final String Admin_url = "/adminController/";
 	public static final String Admin_jsp_dir = "/admin/";
-	//private static final int debug = 0;
 	
 	@Autowired
 	private SalesService salesService;
@@ -120,12 +119,8 @@ public class AdminController {
 	}
 	
 	@RequestMapping("logout.html")
-	public String logout(Model model, HttpServletRequest request) {	
-//		if(request.getSession().getAttribute("admin") == null) {
-//			return Admin_jsp_dir + "AdminPage";
-//		}
-		request.getSession().invalidate();  // drop session
-//		String url = Admin_jsp_dir+"logout";
+	public String logout(Model model, HttpServletRequest request) {
+		request.getSession().invalidate(); 
 			return "/logout";
 	}
 	

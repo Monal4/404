@@ -10,24 +10,11 @@ import java.sql.Statement;
 import org.springframework.stereotype.Repository;
 
 
-/**
- * 
- * Access admin related tables through this class.
- */
 @Repository
 public class AdminUserDAO {
 	
 	public AdminUserDAO (DbUtils db) {
 	}
-	
-	
-	/**
-	 * check login user name and password
-	 * @param uid
-	 * @param pwd
-	 * @return
-	 * @throws SQLException
-	 */
 	
 	public Boolean findAdminUser(Connection connection, String uid, String pwd) throws SQLException {
 		System.out.println("Entered DAO layer:-");
@@ -36,7 +23,7 @@ public class AdminUserDAO {
 			ResultSet set = stmt.executeQuery(" select * from " + ADMIN_TABLE +
 					" where username = '" + uid + "'" +
 					" and password = '" + pwd + "'");
-			if (set.next()){ // if the result is not empty
+			if (set.next()) {
 				set.close();
 				return true;
 			}
