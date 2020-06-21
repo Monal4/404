@@ -35,13 +35,13 @@ public class CatalogController{
 	@Autowired
 	private CatalogService catalogService;
 
-	private static final String WELCOME_URL = "";
-	private static final String WELCOME_VIEW = "/welcome";
+	private static final String WELCOME_URL = "/";
+	//private static final String WELCOME_VIEW = "/welcome";
 	
 
 	@RequestMapping(WELCOME_URL)
 	public String handleWelcome() {
-		return WELCOME_VIEW;
+		return "/catalog";
 	}
 
 	@RequestMapping("/download")
@@ -49,49 +49,11 @@ public class CatalogController{
 	String productCode, HttpServletRequest request) throws ServletException
 	{
 		String url = null;
-		if (productCode.equals("pf01")) {
-			productCode = "pf01";
-			model.addAttribute("productCode", productCode);
-			model.addAttribute("title", "Whiskey Before Breakfast");
-			model.addAttribute("src", "/sound/pf01/whiskey.mp3");
-			model.addAttribute("title1", "64 corvair");
-			model.addAttribute("src1", "/sound/pf01/corvair.mp3");
-			url = "/sound/universal"; 
-			
-		} else if(productCode.equals("8601")) {
-			model.addAttribute("productCode", productCode);
-			model.addAttribute("title", "You Are a Star");
-			model.addAttribute("src",
-					"/sound/8601/star.mp3");
-			
-			model.addAttribute("title1", "Don't Make No Difference");
-			model.addAttribute("src1",
-					"/sound/8601/no_difference.mp3");
-			url = "/sound/universal"; 
-		} else if(productCode.equals("jr01")) {
-			model.addAttribute("productCode", productCode);
-			model.addAttribute("title", "Filter");
-			model.addAttribute("src",
-					"/sound/jr01/filter.mp3");
-			
-			model.addAttribute("title1", "So Long Lazy Ray");
-			model.addAttribute("src1",
-					"/sound/jr01/so_long.mp3");
-			url = "/sound/universal"; 
-		} else if(productCode.equals("pf02")) {
-			model.addAttribute("productCode", productCode);
-			model.addAttribute("title", "Neon Lights");
-			model.addAttribute("src",
-					"/sound/pf02/neon.mp3");
-			
-			model.addAttribute("title1", "Tank Hill");
-			model.addAttribute("src1",
-					"/sound/pf02/tank.mp3");
-			url = "/sound/universal"; 
-		} 
-		model.addAttribute("productCode", productCode);
-		
-		return url;
+		if(request.getSession().getAttribute("user") == null) {
+			return "/userWelcome";
+		}
+
+		return "/sound/" + productCode + "/sound";
 	}
 
 	@RequestMapping("cart")
@@ -135,11 +97,7 @@ public class CatalogController{
 		Set<CartItemData> setofcartdata = new HashSet<CartItemData>();
 		ArrayList<Long> id = new ArrayList<>();
 		ArrayList<Integer> quantity = new ArrayList<>();
-		
-//		if(request.getSession().getAttribute("cart") == null) {
-//			Cart cart = new Cart();
-//		}
-		
+	
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
 		try {
 			if(cart == null) {

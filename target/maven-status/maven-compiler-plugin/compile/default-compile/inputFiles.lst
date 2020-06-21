@@ -22,7 +22,6 @@ C:\CS636\music3\src\main\java\cs636\music\service\SalesService.java
 C:\CS636\music3\src\main\java\cs636\music\dao\SalesDbDAO.java
 C:\CS636\music3\src\main\java\cs636\music\domain\CartItem.java
 C:\CS636\music3\src\main\java\cs636\music\presentation\web\AdminBean.java
-C:\CS636\music3\src\main\java\cs636\music\config\DatabaseConfig.java
 C:\CS636\music3\src\main\java\cs636\music\dao\CatalogDbDAO.java
 C:\CS636\music3\src\main\java\cs636\music\presentation\web\CatalogController.java
 C:\CS636\music3\src\main\java\cs636\music\dao\LineItemDAO.java

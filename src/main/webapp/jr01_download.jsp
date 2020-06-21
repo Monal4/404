@@ -1,16 +1,6 @@
 <%@page contentType="text/html" pageEncoding="utf-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Murach's Java Servlets and JSP</title>
-    <link rel="stylesheet" href="styles/main.css" type="text/css"/>
-</head>
-<body>
+<jsp:include page="/includes/header.jsp" />
 
-<h1>Downloads</h1>
-
-<h2>Joe Rut - Genuine Wood Grained Finish</h2>
-    
 <table>
 <tr>
     <th>Song title</th>
@@ -29,7 +19,4 @@
 
 <p><a href="catalog.html">View list of albums</a></p>
 
-<p><a href="?action=viewCookies">View all cookies and session variables</a></p>
-
-</body>
-</html>
+<jsp:include page="/includes/footer.jsp" />

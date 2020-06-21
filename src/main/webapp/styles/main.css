@@ -1,13 +1,11 @@
+#catalog{
+    margin: 0 auto; 
+    padding-top: 20px; 
+    padding-left: 20px;
+}
 
-/* minimal CSS for cs636: just positioning parts of the page */
-body {
- 	width: 750px
-}
-#sidebar {
-    float: left;
-    width: 150px;
-}
-section {
-    float: left;
-    width: 600px;
+#registerationForm{
+    margin: 0 auto; 
+    padding-top: 20px; 
+    padding-left: 20px;
 }

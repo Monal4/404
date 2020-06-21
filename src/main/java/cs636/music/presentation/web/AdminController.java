@@ -82,7 +82,7 @@ public class AdminController {
 	@RequestMapping(Admin_url+"ShowReport.html")
 	public String DisplayReport(Model model, HttpServletRequest request) {
 		if(request.getSession().getAttribute("admin") == null) {
-			return Admin_jsp_dir + "AdminPage";
+			return Admin_jsp_dir + "adminPortalLogin";
 		}
 		return Admin_jsp_dir+"ShowReport";
 	}
@@ -98,6 +98,7 @@ public class AdminController {
 		return url;
 	}
 	
+	//Removed Functionality
 	@RequestMapping(Admin_url + "initializeDB.html")
 	public String adminInitDB(Model model, HttpServletRequest request) {
 		if(request.getSession().getAttribute("admin") == null) {
@@ -120,8 +121,9 @@ public class AdminController {
 	
 	@RequestMapping("logout.html")
 	public String logout(Model model, HttpServletRequest request) {
+		model.addAttribute("admin",null);
 		request.getSession().invalidate(); 
-			return "/logout";
+		return "/logout";
 	}
 	
 	@RequestMapping(Admin_url+"AdminPage.html")
