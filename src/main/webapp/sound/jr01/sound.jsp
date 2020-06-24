@@ -1,34 +1,36 @@
-<%@page contentType="text/html" pageEncoding="utf-8"%>
 <jsp:include page="/includes/header.jsp" />
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<td width="404" valign="top">
-      <table>
+  <!-- <div class="fluid-container" style="text-align: center;"> -->
+    <table class="table">
+      <thead>
         <tr>
-          <td width="300"><b>Song title</b></td>
-          <td width="100"><b>Audio Format</b></td>
+          <th scope="col"><b>Song title</b></th>
+          <th scope="col"><b>Audio Format</b></th>
         </tr>
-        <tr>
-          <td>1. Filter</td>
-          <td width="40"><a href="filter.mp3">MP3</a></td>
-        </tr>
-        <tr><td>2. Find My Way Marie</td></tr>
-        <tr><td>3. Hole</td></tr>
-        <tr><td>4. 1400 Years</td></tr>
-        <tr>
-          <td>5. So Long Lazy Ray</td>
-          <td width="40"><a href="so_long.mp3">MP3</a></td>
-        </tr>
-        <tr><td>6. A Tuna Is a Damn Big Fish</td></tr>
-        <tr><td>7. El Dorado</td></tr>
-        <tr><td>8. Dream of You</td></tr>
-        <tr><td>9. This Sea Is Full of Monsters</td></tr>
-        <tr><td>10. A Place in All This</td></tr>
-        <tr><td>11. GTTSWMD</td></tr>
-        <tr><td>12. AM Land</td></tr>
-        <tr><td>13. Whole Month of Sundays</td></tr>
-        <tr><td>14. Penny From a Poor Man</td></tr>
-      </table>
-</td>
-
+      </thead>
+      <tr>
+        <td scope="col">1. Filter</td>
+        <td scope="col">
+          <audio src="/sound/jr01/filter.mp3" controls></audio>
+        </td>
+      </tr>
+      <tr>
+        <td scope="col">2. So Long Lazy Ray</td>
+        <td scope="col">
+          <audio src="/sound/jr01/so_long.mp3" controls></audio>
+        </td>
+      </tr>
+    </table>
+    
+    <form class="form-inline" action="AddToCart">
+      <div class="form-group mx-sm-3 mb-2">
+        <input class="form-control" placeholder="Enter Quantity" type="number" name="quantity" min="1" max="10" value="${quantity}"/>
+        <input type="hidden" name="productCode" value="${productCode}"/>
+      </div>
+      <button type="submit" style="margin: 0;" class="btn btn-primary mb-2">Add to cart</button>
+      <a class="btn btn-secondary mb-2"  href="/"> Home </a>
+    </form>
+  <!-- </div> -->
 
 <jsp:include page="/includes/footer.jsp" />

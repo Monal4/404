@@ -19,11 +19,6 @@ import cs636.music.domain.Track;
 import cs636.music.service.data.CartItemData;
 import cs636.music.service.data.DownloadData;
 
-/**
- * 
- * Provides product-related services to user apps 
- * 
- */
 @Service
 public class CatalogService {
 	@Autowired
@@ -71,7 +66,7 @@ public class CatalogService {
 	}
 	
 	public void addItemtoCart(long productId, Cart cart, int quantity) {
-		System.out.println("The product Quantity is:=");
+		System.out.println("The product Quantity is:=" + quantity);
 		CartItem item = cart.findItem(productId);
 		if (item != null) { 
 			int qty = item.getQuantity();

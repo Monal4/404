@@ -1,29 +1,33 @@
-<td width="404" valign="top">
+<jsp:include page="/includes/header.jsp" />
 
+<input type="hidden" value="${productCode}">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"><b>Song title</b></th>
+      <th scope="col"><b>Audio Format</b></th>
+    </tr>
+  </thead>
+  <tr>
+    <td scope="col">1. You Are a Star</td>
+    <td scope="col">
+      <audio src="/sound/8601/star.mp3" controls></audio>
+    </td>
+  </tr>
+  <tr>
+    <td scope="col">2. Don't Make No Difference</td>
+    <td scope="col">
+      <audio src="/sound/8601/no_difference.mp3" controls></audio>
+    </td>
+  </tr>
+</table>
 
-  <p>To listen to a track, click on the audio format.</p>
-
-<table>
-    <tr>
-      <td width="200"><b>Song title</b></td>
-      <td width="100"><b>Audio Format</b></td>
-    </tr>
-    <tr><td>1. How to Get There</td></tr>
-    <tr>
-      <td>2. You Are a Star</td>
-      <td><a href="star.mp3">MP3</a></td>
-    </tr>
-    <tr>
-      <td>3. Don't Make No Difference</td>
-      <td><a href="no_difference.mp3">MP3</a></td>
-    </tr>
-    <tr><td>4. Unidentified Fiddling Object</td></tr>
-    <tr><td>5. Beat Up Old Car</td></tr>
-    <tr><td>6. Wildflowers</td></tr>
-    <tr><td>7. What You Whistle When You Walk Home</td></tr>
-    <tr><td>8. Three Sheets to the Wind</td></tr>
-    <tr><td>9. Singin' Drunk</td></tr>
-    <tr><td>10. Don't Close Your Eyes</td></tr>
-    <tr><td>11. Morning Sun</td></tr>
-  </table>
-</td>
+<form class="form-inline" action="AddToCart">
+  <div class="form-group mx-sm-3 mb-2">
+    <input class="form-control" placeholder="Enter Quantity" type="number" name="quantity" min="1" max="10" value="${quantity}"/>
+    <input type="hidden" name="productCode" value="${productCode}"/>
+  </div>
+  <button type="submit" style="margin: 0;" class="btn btn-primary mb-2">Add to cart</button>
+  <a class="btn btn-secondary mb-2"  href="/"> Home </a>
+</form>
+<jsp:include page="/includes/footer.jsp" />

@@ -43,9 +43,6 @@ public class SalesController {
 		
 		//String forwardURL;
 		
-		if(request.getSession().getAttribute("user") != null) {
-			return "catalog";
-		}
 		UserBean user = (UserBean) request.getSession().getAttribute("user");
 		if(user == null) {
 			user = new UserBean();
