@@ -89,9 +89,6 @@ public class AdminController {
 	
 	@RequestMapping(Admin_url+"listVariables.html")
 	public String listVariables(Model model, HttpServletRequest request) {	
-		if(request.getSession().getAttribute("admin") == null) {
-			return Admin_jsp_dir + "adminPortalLogin";
-		}
 		model.addAttribute("dbUrl", dbUrl);
 		System.out.println("dbUrl from application.properties: " + dbUrl);
 		String url = Admin_jsp_dir+"listVariables";

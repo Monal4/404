@@ -24,10 +24,10 @@
   
   <form class="form-inline" action="AddToCart">
     <div class="form-group mx-sm-3 mb-2">
-      <input class="form-control" placeholder="Enter Quantity" type="number" name="quantity" min="1" max="10" value="${quantity}"/>
+      <input class="form-control" placeholder="Enter Quantity" type="number" name="quantity" min="1" max="10" value="${quantity}" required/>
       <input type="hidden" name="productCode" value="${productCode}"/>
     </div>
-    <button type="submit" style="margin: 0;" class="btn btn-primary mb-2">Add to cart</button>
+    <button type="submit" style="margin-right: 3px;" class="btn btn-primary mb-2">Add to cart</button>
     <a class="btn btn-secondary mb-2"  href="/"> Home </a>
   </form>
 

@@ -3,6 +3,7 @@ package cs636.music.presentation.web;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.awt.List;
 import java.io.IOException;
@@ -55,6 +56,7 @@ public class CatalogController{
 		model.addAttribute("productCode", productCode);
 		return "/sound/" + productCode + "/sound";
 	}
+
 	@RequestMapping("AddToCart") 
 	public String addtoCart(HttpServletRequest request, @RequestParam(value="quantity", required=false) Integer productQuantity
 	, @RequestParam(value = "productCode", required=false) String productCode) throws ServletException{
@@ -96,12 +98,88 @@ public class CatalogController{
 		Cart cart = null;
 		try {
 			cart = (Cart) request.getSession().getAttribute("cart");
-			cart.getItems().forEach(i->System.out.println(i.getProductId()));
+			//cart.getItems().forEach(i->System.out.println(i.getProductId()));
 			setofcartdata = catalogService.getCartInfo(cart);
 		}catch(Exception e) {
 			System.out.println("Exception in setofcartdata" + e);
 		}	
 		model.addAttribute("products", setofcartdata);
+
+		BigDecimal total = new BigDecimal(0);
+
+		if(setofcartdata.size()!=0) {
+			for(CartItemData item : setofcartdata) {
+				BigDecimal quantity = new BigDecimal(item.getQuantity());
+				total = total.add(item.getPrice().multiply(quantity));
+			}
+		}
+		System.out.println("total " + total);
+		model.addAttribute("Total", total);
+		return "cart";
+	}
+
+	@RequestMapping("/Update/{id}")
+	public String updateQuantity(HttpServletRequest request, Model model, @PathVariable("id") Integer id, 
+	@RequestParam(value="newQuantity", required=false) Integer quantity) throws ServletException{
+
+		System.out.println(quantity);
+		Cart cart = (Cart) request.getSession().getAttribute("cart");
+		Set<CartItemData> set = new HashSet<>();
+
+		//System.out.println("the old " + );
+		catalogService.changeCart(id, cart, quantity);
+		//System.out.println("the new " + c.getQuantity());
+
+		try{
+			set = catalogService.getCartInfo(cart);
+		}catch(Exception e) {
+			System.out.println("Exception in updating cart: " + e);
+		}
+
+		model.addAttribute("products", set);
+
+		BigDecimal total = new BigDecimal(0);
+
+		if(set.size()!=0) {
+			for(CartItemData item : set) {
+				BigDecimal newquantity = new BigDecimal(item.getQuantity());
+				total = total.add(item.getPrice().multiply(newquantity));
+			}
+		}
+		System.out.println("total " + total);
+		model.addAttribute("Total", total);
+
+		return "cart";
+	}
+
+
+	@RequestMapping("/remove/{ID}")
+	public String removeCartItem(HttpServletRequest request, Model model, @PathVariable("ID") Integer Id) throws ServletException {
+		Cart cart = (Cart) request.getSession().getAttribute("cart");
+		catalogService.removeCartItem(Id, cart);
+
+		Set<CartItemData> setofcartdata = new HashSet<CartItemData>();
+
+		try {
+			//cart = (Cart) request.getSession().getAttribute("cart");
+			//cart.getItems().forEach(i->System.out.println(i.getProductId()));
+			setofcartdata = catalogService.getCartInfo(cart);
+		}catch(Exception e) {
+			System.out.println("Exception in setofcartdata" + e);
+		}	
+		model.addAttribute("products", setofcartdata);
+
+		BigDecimal total = new BigDecimal(0);
+
+		if(setofcartdata.size()!=0) {
+			for(CartItemData item : setofcartdata) {
+				BigDecimal quantity = new BigDecimal(item.getQuantity());
+				total = total.add(item.getPrice().multiply(quantity));
+			}
+		}
+		System.out.println("total " + total);
+		model.addAttribute("Total", total);
+
 		return "cart";
 	}
 	
