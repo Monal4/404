@@ -3,7 +3,6 @@ pageEncoding="UTF-8"%>
 <jsp:include page="/includes/header.jsp" />
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script type="text/javascript" src="/styles/main.js"> </script>
 <div class="container">	
 <table class="table">
 		<thead>
@@ -37,7 +36,7 @@ pageEncoding="UTF-8"%>
 							Qty: ${p.quantity}
 						</button>
 						<div class="dropdown-menu">
-							<form class="form-inline" action="/Update/${p.productId}/${newQuantity}">
+							<form class="form-inline" action="/Update/${p.productId}">
 								<div class="form-group mb-2">
 									<input type="number" value="${newQuantity}" name="newQuantity" class="form-control" id="staticEmail2" min="0" max="25" required>
 									<button class="btn btn-primary" type="submit">Update</button>
@@ -60,14 +59,16 @@ pageEncoding="UTF-8"%>
 		</div>
 		<br>
 		</c:forEach>
-	</table>
+		<div class="container">
+			<form class="form-inline" action="/checkout">
+				<button class="btn btn-primary" type="submit" style="float: left;"> Checkout </button>
+				<!-- &nbsp;&nbsp; -->
+				<!-- <button class="btn btn-primary" style="margin-right: auto;" formaction="/"> Home </button> -->
+				<label class="label text-right" style="margin-left: auto;"> Sub Total: ${Total}</label>
+			</form>
+		</div>
 </div>
 
-	<div class="container">
-		<form class="form-inline">
-			<label class="label" style="margin-left: auto;"> Sub Total: ${Total}</label>
-		</form>
-	</div>
 <!-- <a href="catalog.html"> continue shopping!</a> -->
 
 <jsp:include page="/includes/footer.jsp" />

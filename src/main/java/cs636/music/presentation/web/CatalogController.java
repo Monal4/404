@@ -37,8 +37,6 @@ public class CatalogController{
 	private CatalogService catalogService;
 
 	private static final String WELCOME_URL = "/";
-	//private static final String WELCOME_VIEW = "/welcome";
-	
 
 	@RequestMapping(WELCOME_URL)
 	public String handleWelcome() {
@@ -105,15 +103,8 @@ public class CatalogController{
 		}	
 		model.addAttribute("products", setofcartdata);
 
-		BigDecimal total = new BigDecimal(0);
-
-		if(setofcartdata.size()!=0) {
-			for(CartItemData item : setofcartdata) {
-				BigDecimal quantity = new BigDecimal(item.getQuantity());
-				total = total.add(item.getPrice().multiply(quantity));
-			}
-		}
-		System.out.println("total " + total);
+		BigDecimal total = GetSubTotal(0,setofcartdata);
+		
 		model.addAttribute("Total", total);
 		return "cart";
 	}
@@ -126,9 +117,7 @@ public class CatalogController{
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
 		Set<CartItemData> set = new HashSet<>();
 
-		//System.out.println("the old " + );
 		catalogService.changeCart(id, cart, quantity);
-		//System.out.println("the new " + c.getQuantity());
 
 		try{
 			set = catalogService.getCartInfo(cart);
@@ -138,7 +127,15 @@ public class CatalogController{
 
 		model.addAttribute("products", set);
 
-		BigDecimal total = new BigDecimal(0);
+		BigDecimal total = GetSubTotal(0,set);
+		
+		model.addAttribute("Total", total);
+
+		return "cart";
+	}
+
+	public static BigDecimal GetSubTotal(int init, Set<CartItemData> set) {
+		BigDecimal total = new BigDecimal(init);
 
 		if(set.size()!=0) {
 			for(CartItemData item : set) {
@@ -146,12 +143,31 @@ public class CatalogController{
 				total = total.add(item.getPrice().multiply(newquantity));
 			}
 		}
-		System.out.println("total " + total);
-		model.addAttribute("Total", total);
-
-		return "cart";
+		System.out.println(total);
+		return total;
 	}
 
+	@RequestMapping("/checkout")
+	public String checkout(HttpServletRequest request, Model model) throws ServletException{
+		Cart cart = (Cart) request.getSession().getAttribute("cart");
+		Set<CartItemData> allproducts = new HashSet<>();
+
+		try{
+			allproducts = catalogService.getCartInfo(cart);
+		}catch(Exception e) {
+			System.out.println("Exception in updating cart: " + e);
+		}
+
+		System.out.println("Checkout initiated" + cart.getItems().size());
+		
+		if(cart.getItems().size() == 0) return "catalog";
+		model.addAttribute("Products", allproducts);
+		
+		BigDecimal total = GetSubTotal(0,allproducts);
+		model.addAttribute("total", total);
+
+		return "checkout";
+	}
 
 	@RequestMapping("/remove/{ID}")
 	public String removeCartItem(HttpServletRequest request, Model model, @PathVariable("ID") Integer Id) throws ServletException {
@@ -161,23 +177,13 @@ public class CatalogController{
 		Set<CartItemData> setofcartdata = new HashSet<CartItemData>();
 
 		try {
-			//cart = (Cart) request.getSession().getAttribute("cart");
-			//cart.getItems().forEach(i->System.out.println(i.getProductId()));
 			setofcartdata = catalogService.getCartInfo(cart);
 		}catch(Exception e) {
 			System.out.println("Exception in setofcartdata" + e);
 		}	
 		model.addAttribute("products", setofcartdata);
-
-		BigDecimal total = new BigDecimal(0);
-
-		if(setofcartdata.size()!=0) {
-			for(CartItemData item : setofcartdata) {
-				BigDecimal quantity = new BigDecimal(item.getQuantity());
-				total = total.add(item.getPrice().multiply(quantity));
-			}
-		}
-		System.out.println("total " + total);
+		
+		BigDecimal total = GetSubTotal(0,setofcartdata);
 		model.addAttribute("Total", total);
 
 		return "cart";
